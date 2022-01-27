@@ -1,10 +1,10 @@
 package com.example.integrlinebyline;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.integration.annotation.InboundChannelAdapter;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.Poller;
@@ -19,11 +19,12 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 import java.io.File;
-import java.util.Scanner;
+
 
 @SpringBootApplication
 @IntegrationComponentScan
 @Configuration
+@Profile("Application")
 public class Application {
 
     @Bean
@@ -50,18 +51,8 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(Application.class);
-        ctx.registerShutdownHook();
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Please enter q and press <enter> to exit the program: ");
-
-        while (true) {
-            String input = scanner.nextLine();
-            if ("q".equals(input.trim())) {
-                break;
-            }
-        }
-        System.exit(0);
+        SpringApplication application = new SpringApplication(Application.class);
+        application.setAdditionalProfiles("Application");
+        application.run(args);
     }
 }
