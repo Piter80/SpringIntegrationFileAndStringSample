@@ -33,13 +33,11 @@ public class ApplicationWithFileFlow {
     private static final String FILE_DEST = "d:/mydir/";
 
     @Bean
-    //@Profile("ApplicationWithFileFlow")
     public MessageChannel fileFlowChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    //@Profile("ApplicationWithFileFlow")
     @InboundChannelAdapter(value = "fileFlowChannel", poller = @Poller(fixedDelay = "1000"))
     public MessageSource<File> fileReadingMessageSource() {
         FileReadingMessageSource source = new FileReadingMessageSource();
@@ -49,7 +47,6 @@ public class ApplicationWithFileFlow {
     }
 
     @Bean
-    //@Profile("ApplicationWithFileFlow")
     public IntegrationFlow moveIncomingFile() {
         return IntegrationFlows.from(fileFlowChannel())
                 .handle(new HeaderEnricher(), "enrichMessage")
@@ -59,7 +56,6 @@ public class ApplicationWithFileFlow {
     }
 
     @Service
-    //@Profile("ApplicationWithFileFlow")
     public static class HandleFile {
         @SneakyThrows
         public void handle(Message<File> fileMessage) {
@@ -72,7 +68,6 @@ public class ApplicationWithFileFlow {
     }
 
     @Service
-    //@Profile("ApplicationWithFileFlow")
     public static class HeaderEnricher {
         public Message<File> enrichMessage(Message<File> message) {
             Message<File> fileDest = MessageBuilder.<File>fromMessage(message)

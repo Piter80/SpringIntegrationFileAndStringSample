@@ -21,6 +21,10 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-integration'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'javax.activation:activation:1.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+    implementation 'org.springframework:spring-oxm'
     //implementation 'org.springframework.boot:spring-integration-core'
     implementation 'org.springframework.integration:spring-integration-file'
     compileOnly 'org.projectlombok:lombok'
